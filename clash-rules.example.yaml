@@ -91,13 +91,14 @@ rule-providers:
     interval: 86400
 
 rules-whitelist:
-  - DOMAIN-KEYWORD,antigravity,✨ Gemini
-  - DOMAIN-KEYWORD,cloudcode-pa,✨ Gemini
   - RULE-SET,applications,DIRECT
   - DOMAIN,clash.razord.top,DIRECT
   - DOMAIN,yacd.haishan.me,DIRECT
   - RULE-SET,private,DIRECT
   - RULE-SET,reject,REJECT
+  - DOMAIN-KEYWORD,antigravity,✨ Gemini
+  - DOMAIN-KEYWORD,cloudcode-pa,✨ Gemini
+  - PROCESS-PATH-REGEX,.*/claude/versions/.*,👾 Claude
   - RULE-SET,icloud,DIRECT
   - RULE-SET,apple,DIRECT
   # - RULE-SET,google,PROXY
@@ -112,14 +113,15 @@ rules-whitelist:
   - MATCH,FINAL-whitelist
 
 rules-blacklist:
-  - DOMAIN-KEYWORD,antigravity,✨ Gemini
-  - DOMAIN-KEYWORD,cloudcode-pa,✨ Gemini
   - DOMAIN-KEYWORD,amytele,PROXY
   - RULE-SET,applications,DIRECT
   - DOMAIN,clash.razord.top,DIRECT
   - DOMAIN,yacd.haishan.me,DIRECT
   - RULE-SET,private,DIRECT
   - RULE-SET,reject,REJECT
+  - DOMAIN-KEYWORD,antigravity,✨ Gemini
+  - DOMAIN-KEYWORD,cloudcode-pa,✨ Gemini
+  - PROCESS-PATH-REGEX,.*/claude/versions/.*,👾 Claude
   - RULE-SET,tld-not-cn,PROXY
   - RULE-SET,gfw,PROXY
   - RULE-SET,telegramcidr,PROXY
