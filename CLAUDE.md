@@ -18,7 +18,7 @@ There is no test suite. To exercise the code, run the CLI against a real subscri
 A single-module CLI (`src/amy_patch.py`) that rewrites a Clash subscription config. The pipeline in `main()`:
 
 1. `load_config()` — fetch the subscription YAML over HTTP (`httpx`, async).
-2. Read `clash-rules.yaml` and `extra-rules.yaml` **from the current working directory** — these are required and not packaged. `.example.yaml` versions are committed; the real files are gitignored. The CLI fails if they are absent.
+2. Read `clash-rules.yaml` and `extra-rules.yaml` **from the current working directory** via `load_rules()`. These are not packaged; the real files are gitignored. If a real file is absent, `load_rules()` falls back to the committed `.example.yaml` version. The CLI fails only if neither the real nor the example file is present.
 3. `patch()` — mutate the config dict in place, then `yaml.dump` it.
 4. Write to `--output` (default `./output/config.yaml`, gitignored).
 

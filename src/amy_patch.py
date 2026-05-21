@@ -147,6 +147,21 @@ def patch(
     return yaml.dump(config, allow_unicode=True, sort_keys=False)
 
 
+def load_rules(name: str) -> dict:
+    """Read a rules YAML file from the cwd, falling back to the committed
+    `.example.yaml` version when the real file is absent."""
+    path = Path(f"./{name}.yaml")
+    if not path.exists():
+        example = Path(f"./{name}.example.yaml")
+        if not example.exists():
+            raise FileNotFoundError(
+                f"Neither {path} nor {example} exists in the current directory"
+            )
+        print(f"{path} not found, falling back to {example}")
+        path = example
+    return yaml.safe_load(path.read_text())
+
+
 async def main(
     url: str,
     mode: Mode = "blacklist",
@@ -154,8 +169,8 @@ async def main(
     output: Path = Path("./output/config.yaml"),
 ) -> None:
     config, _ = await load_config(url)
-    clash_rules = yaml.safe_load(Path("./clash-rules.yaml").read_text())
-    extra_rules = yaml.safe_load(Path("./extra-rules.yaml").read_text())
+    clash_rules = load_rules("clash-rules")
+    extra_rules = load_rules("extra-rules")
     patched = patch(config, clash_rules, extra_rules, mode, tun_mode)
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(patched)
